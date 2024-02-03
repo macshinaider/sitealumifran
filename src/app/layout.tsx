@@ -7,6 +7,7 @@ const inter = Rubik({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Alumifran Descartaveis",
   description: "Seja bem vindo a Alumifran Descartaveis",
+  
 };
 
 export default function RootLayout({
