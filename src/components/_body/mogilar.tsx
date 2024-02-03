@@ -13,7 +13,7 @@ export default function Centro() {
     <div className="flex items-center justify-center p-4 m-4 border rounded shadow">
       <section>
         <div>
-          <h1 className="text-4xl">Unidade Mogilar</h1>
+          <h1 className="text-4xl text-center flex items-center">Unidade Mogilar</h1>
           <div className="mt-5">
             <div>
               <h2 className="text-2xl">Informações de Contato</h2>
