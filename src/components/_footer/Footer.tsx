@@ -1,28 +1,43 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-export default function Footer() {
-  const [isVisible, setIsVisible] = useState(false);
+type GithubUser = {
+  name: string;
+  html_url: string;
+};
 
-  // Função para verificar se o usuário rolou até o final da página
-  const checkScroll = () => {
-    if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) {
-      setIsVisible(false);
-    } else {
-      setIsVisible(true);
-    }
-  };
+const Footer = () => {
+  const [creatorInfo, setCreatorInfo] = useState<GithubUser | null>(null);
 
-  // Adiciona o event listener quando o componente é montado
-  // e o remove quando é desmontado
   useEffect(() => {
-    window.addEventListener('scroll', checkScroll);
-    return () => window.removeEventListener('scroll', checkScroll);
+    const fetchGithubInfo = async () => {
+      try {
+        const response = await axios.get('https://api.github.com/users/macshinaider');
+        setCreatorInfo(response.data);
+      } catch (error) {
+        console.error('Erro ao buscar informações do GitHub:', error);
+      }
+    };
+
+    fetchGithubInfo();
   }, []);
 
   return (
-    <footer className={`fixed inset-x-0 bottom-0 items-center justify-center bg-slate-700 ${isVisible ? 'block' : 'hidden'}`}>
-      <h1>footer</h1>
+    <footer className="bg-gray-800 text-white p-4 mt-6">
+      <div className="container mx-auto text-center">
+        <h2 className="text-2xl mb-2">Alumifran Descartáveis</h2>
+        {creatorInfo && (
+          <>
+            <p className="mb-2">Criado por {creatorInfo.name}</p>
+            <a href={creatorInfo.html_url} target="_blank" rel="noopener noreferrer" className="underline">
+              Ver perfil no GitHub
+            </a>
+          </>
+        )}
+      </div>
     </footer>
   );
-}
+};
+
+export default Footer;
